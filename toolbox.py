@@ -14,9 +14,9 @@ data_with_noise = []
 data_shifted = []
 data_with_sin = []
 labels = ['$x^{-1}$', '$x^0$', '$x^1$', '$x^2$', '$x^3$']
-labels_shifted = ['$(x-t)^{-1}$', '$(x-t)^0$', '$(x-t)^1$', '$(x-t)^2$', '$(x-t)^3$']
+labels_shifted = ['$(x+t)^{-1}$', '$(x+t)^0$', '$(x+t)^1$', '$(x+t)^2$', '$(x+t)^3$']
 labels_sin = [x + ' + sin(f \pi x) \cdot a$' for x in ['$x^{-1}', '$x^0', '$x^1', '$x^2', '$x^3']]
-x = np.linspace(0, 2, 100)
+x = np.linspace(0, 2, 128)
 for p in [0.5, 0, 1, 2, 3]:
     y = x**p
     y_noise = x**p + np.random.rand(len(x))*0.1
@@ -29,6 +29,44 @@ for p in [0.5, 0, 1, 2, 3]:
     data_with_noise.append(y_noise)
     data_shifted.append(y_shifted)
     data_with_sin.append(y_sin)
+
+data_zero_padded = []
+data_zero_padded_labels = []
+padding = 50
+x_padded = x[:len(x)-padding]
+
+y = np.concatenate((np.zeros(padding), x_padded))
+data_zero_padded.append(y)
+data_zero_padded_labels.append('$x$')
+
+y = np.concatenate((np.zeros(padding), np.sin(x_padded * 2 * np.pi)))
+data_zero_padded.append(y)
+data_zero_padded_labels.append('$sin(2 \pi x)$')
+
+y = np.concatenate((np.zeros(padding), np.sin(x_padded * 10 * np.pi)))
+data_zero_padded.append(y)
+data_zero_padded_labels.append('$sin(10 \pi x)$')
+
+y = np.concatenate((np.zeros(padding), np.sin(x_padded * 20 * np.pi)))
+data_zero_padded.append(y)
+data_zero_padded_labels.append('$sin(20 \pi x)$')
+
+
+data_sin_with_noise = []
+data_sin_with_noise_labels = []
+noise = 1
+
+y = data_zero_padded[1] + (np.random.rand(len(x)) - 0.5) * noise
+data_sin_with_noise.append(y)
+data_sin_with_noise_labels.append('$sin(x 2 \pi) + rand$')
+
+y = data_zero_padded[2] + (np.random.rand(len(x)) - 0.5) * noise
+data_sin_with_noise.append(y)
+data_sin_with_noise_labels.append('$sin(x 10 \pi) + rand$')
+
+y = data_zero_padded[3] + (np.random.rand(len(x)) - 0.5) * noise
+data_sin_with_noise.append(y)
+data_sin_with_noise_labels.append('$sin(x 20 \pi) + rand$')
 
 data = data_pure
 #labels += ['$x + sin(20 \pi x)$']
@@ -74,16 +112,19 @@ def plot_dwt_result(data, labels, wavelet, ca_axis, cd_axis):
         cd_axis.legend()
         
         
-def plot_dwt_multi_level(data, labels, wavelet, fig, level=None, legend=False):
+def plot_dwt_multi_level(data, labels, wavelet, fig, level=None, legend=False, padding=2, axis_limit=0.001):
     plots = fig.subplots(level + 1, 1)
     for n_d in range(len(data)):
         d = data[n_d]
         l = labels[n_d]
         coeffs = pywt.wavedec(d, wavelet, mode=MODE, level=level)
         for n in range(len(coeffs)):
-            y = coeffs[-(n+1)][2:-2]
-            if np.max(np.abs(y)) < 0.001:
-                plots[n].set_ylim(-0.001, 0.001)
+            if padding > 0:
+                y = coeffs[-(n+1)][padding:-padding]
+            else:
+                y = coeffs[-(n+1)]
+            if np.max(np.abs(y)) < axis_limit:
+                plots[n].set_ylim(-axis_limit, axis_limit)
             plots[n].plot(y, label=l)
             #print(len(coeffs[-(n+1)]))
     if legend:
