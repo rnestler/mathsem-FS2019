@@ -13,9 +13,9 @@ data_pure = []
 data_with_noise = []
 data_shifted = []
 data_with_sin = []
-labels = ['$x^{-1}$', '$x^0$', '$x^1$', '$x^2$', '$x^3$']
-labels_shifted = ['$(x+t)^{-1}$', '$(x+t)^0$', '$(x+t)^1$', '$(x+t)^2$', '$(x+t)^3$']
-labels_sin = [x + ' + sin(f \pi x) \cdot a$' for x in ['$x^{-1}', '$x^0', '$x^1', '$x^2', '$x^3']]
+labels = ['$x^{0.5}$', '$x^0$', '$x^1$', '$x^2$', '$x^3$']
+labels_shifted = ['$(x+t)^{0.5}$', '$(x+t)^0$', '$(x+t)^1$', '$(x+t)^2$', '$(x+t)^3$']
+labels_sin = [x + ' + sin(f \pi x) \cdot a$' for x in ['$x^{0.5}', '$x^0', '$x^1', '$x^2', '$x^3']]
 x = np.linspace(0, 2, 128)
 for p in [0.5, 0, 1, 2, 3]:
     y = x**p
