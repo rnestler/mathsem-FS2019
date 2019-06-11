@@ -4,9 +4,6 @@ import pandas as pd
 import numpy as np
 
 from matplotlib import pyplot as plt
-from ipywidgets import HBox, FloatSlider, IntSlider
-from ipywidgets import interact, interactive, fixed, interact_manual
-from IPython.display import display
 
 data = []
 data_pure = []
