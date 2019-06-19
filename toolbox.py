@@ -5,6 +5,40 @@ import numpy as np
 
 from matplotlib import pyplot as plt
 
+POLYNOMS = [0.5, 0, 1, 2, 3]
+POLYNOM_LABELS = ['x^{{{}}}'.format(x) for x in POLYNOMS]
+
+def generate_polynom_data(start, end, steps):
+    x = np.linspace(start, end, steps)
+    data = {}
+    data['x'] = x
+    data['pure'] = {}
+    data['pure']['labels'] = ['$' + x + '$' for x in POLYNOM_LABELS]
+    data['pure']['y'] = []
+
+    data['with_noise'] = {}
+    data['with_noise']['labels'] = ['$' + x + ' + r$' for x in POLYNOM_LABELS]
+    data['with_noise']['y'] = []
+
+    data['shifted'] = {}
+    data['shifted']['labels'] = ['$(x+t)^{{{}}}$'.format(x) for x in POLYNOMS]
+    data['shifted']['y'] = []
+
+    data['sin'] = {}
+    data['sin']['labels'] = ['$' + x + ' + sin(f \pi x) \cdot a$' for x in POLYNOM_LABELS]
+    data['sin']['y'] = []
+
+    for p in POLYNOMS:
+        y = x**p
+        y_noise = x**p + np.random.rand(len(x))*0.1
+        y_shifted = (x + 0.5)**p
+        y_sin = x**p + np.sin(20 * np.pi * x) * 0.1
+        data['pure']['y'].append(y)
+        data['with_noise']['y'].append(y_noise)
+        data['shifted']['y'].append(y_shifted)
+        data['sin']['y'].append(y_sin)
+    return data
+
 data = []
 data_pure = []
 data_with_noise = []
