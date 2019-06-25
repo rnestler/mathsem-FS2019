@@ -121,7 +121,7 @@ def print_signals(data, labels):
     return fig, lines
 
 MODE='smooth'
-def plot_dwt_result(data, labels, wavelet, ca_axis, cd_axis):
+def plot_dwt_result(data, labels, wavelet, ca_axis, cd_axis, cd_title="Detail Koeffizienten"):
     for n in range(len(data)):
         d = data[n]
         l = labels[n]
@@ -135,11 +135,12 @@ def plot_dwt_result(data, labels, wavelet, ca_axis, cd_axis):
         #ca = ca[0:len(d)//2]
         #cd = cd[0:len(d)//2]
         #print(len(d), len(ca), len(cd))
-        ca_axis.set_title("Approximation Koeffizienten")
-        ca_axis.plot(ca, label=l)
-        cd_axis.set_title("Detail Koeffizienten")
-        cd_axis.plot(cd, label=l)
-        
+        if ca_axis:
+            ca_axis.set_title("Approximation Koeffizienten")
+            ca_axis.plot(ca, label=l)
+        if cd_axis:
+            cd_axis.set_title(cd_title)
+            cd_axis.plot(cd, label=l)
         
 def plot_dwt_multi_level(data, labels, wavelet, fig, level=None, legend=False, padding=2, axis_limit=0.001):
     plots = fig.subplots(level + 1, 1)
@@ -228,17 +229,21 @@ def plot_fft_analysis(data, labels, remove_dc=False):
     plot_fft_result(data, labels, ax_lst, remove_dc)
 
 
-def plot_differentation(data, labels, n_diff, axis):
+def plot_differentation(data, labels, n_diff, axis, x=None, legend=True, title=True):
     for n in range(len(data)):
         d = data[n]
         l = labels[n]
         diff = np.diff(d, n_diff)
         #print("Diff Mean:", np.mean(diff))
-        axis.plot(diff, label=l)
-        axis.set_title("Differentiation")
-        axis.legend()
+        if x is None:
+            axis.plot(diff, label=l)
+        else:
+            axis.plot(x[:-1], diff, label=l)
+        if title:
+            axis.set_title("Differentiation")
         axis.grid()
-        
+    if legend:
+        axis.legend()
 
 def plot_differentation_analysis(data, labels, n_diff):
     fig, axis = plt.subplots(1,1)
