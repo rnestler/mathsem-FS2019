@@ -135,12 +135,10 @@ def plot_dwt_result(data, labels, wavelet, ca_axis, cd_axis):
         #ca = ca[0:len(d)//2]
         #cd = cd[0:len(d)//2]
         #print(len(d), len(ca), len(cd))
-        ca_axis.set_title("Approx. Coef")
+        ca_axis.set_title("Approximation Koeffizienten")
         ca_axis.plot(ca, label=l)
-        cd_axis.set_title("Detail Coef")
+        cd_axis.set_title("Detail Koeffizienten")
         cd_axis.plot(cd, label=l)
-        ca_axis.legend()
-        cd_axis.legend()
         
         
 def plot_dwt_multi_level(data, labels, wavelet, fig, level=None, legend=False, padding=2, axis_limit=0.001):
