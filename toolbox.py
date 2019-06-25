@@ -161,6 +161,31 @@ def plot_dwt_multi_level(data, labels, wavelet, fig, level=None, legend=False, p
     if legend:
         for p in plots:
             p.legend()
+
+def plot_dwt_multi_level_single(x, d, wavelet, fig, label='', level=None, legend=False, padding=2, axis_limit=0.1):
+    xtick = np.linspace(min(x), max(x), 9)
+    plots = fig.subplots(level + 2, 1, sharex=True)
+    coeffs = pywt.wavedec(d, wavelet, mode=MODE, level=level)
+    plots[0].plot(x, d, '-o', color='C0')
+    plots[0].set_xticks(xtick)
+    for n in range(len(coeffs)):
+        if padding > 0:
+            y = coeffs[-(n+1)][padding:-padding]
+        else:
+            y = coeffs[-(n+1)]
+        # downsample the x range and shift it
+        if n < len(coeffs) - 1:
+            x = np.linspace((x[0] + x[1])/2, (x[-1] + x[-2]) / 2, len(y))
+            color='C1'
+        else:
+            color='C2'
+        plots[n+1].step(x, y, 'o', where='mid', label=label, color=color)
+        if abs(min(y) - max(y)) < axis_limit:
+            y_lim = plots[n+1].get_ylim()
+            plots[n+1].set_ylim((y_lim[0] - axis_limit, y_lim[1] + axis_limit))
+    if legend:
+        for p in plots:
+            p.legend()
         
 def plot_dwt_approximation_reconstruction(data, labels, wavelet, ca_axis, cd_axis, reconstruct_axis, error_axis):
     for n in range(len(data)):
