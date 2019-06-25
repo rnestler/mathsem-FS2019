@@ -51,6 +51,8 @@ fig, ax_lst = plt.subplots(2, 1, sharex=True)
 
 plot_dwt_result(data[1:], labels[1:], 'db2', None, ax_lst[0], cd_title='db2')
 plot_dwt_result(data[1:], labels[1:], 'db3', None, ax_lst[1], cd_title='db3')
+ax_lst[0].ticklabel_format(useOffset=False, style='sci', scilimits=(0,0))
+ax_lst[1].ticklabel_format(useOffset=False, style='sci', scilimits=(0,0))
 
 fig.legend(loc="center right", borderaxespad=0.1, labels=labels[1:])
 plt.tight_layout()
@@ -63,9 +65,6 @@ plt.savefig('polynomials_signals_db2_3.pdf')
 # Signale mit Rauchen
 data = polynom_data['with_noise']['y'][1:]
 labels = polynom_data['with_noise']['labels'][1:]
-
-print(data)
-print(labels)
 
 
 plt.rcParams["figure.figsize"] = SIZE_BIG
