@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from toolbox import *
 
 plt.rcParams["figure.figsize"] = [5.8, 3.3]
