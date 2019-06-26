@@ -121,7 +121,7 @@ def print_signals(data, labels):
     return fig, lines
 
 MODE='smooth'
-def plot_dwt_result(data, labels, wavelet, ca_axis, cd_axis, cd_title="Detail Koeffizienten"):
+def plot_dwt_result(data, labels, wavelet, ca_axis, cd_axis, cd_title="Detailkoeffizienten"):
     for n in range(len(data)):
         d = data[n]
         l = labels[n]
@@ -136,7 +136,7 @@ def plot_dwt_result(data, labels, wavelet, ca_axis, cd_axis, cd_title="Detail Ko
         #cd = cd[0:len(d)//2]
         #print(len(d), len(ca), len(cd))
         if ca_axis:
-            ca_axis.set_title("Approximation Koeffizienten")
+            ca_axis.set_title("Approximationskoeffizienten")
             ca_axis.plot(ca, label=l)
         if cd_axis:
             cd_axis.set_title(cd_title)
