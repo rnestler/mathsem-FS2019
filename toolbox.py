@@ -30,7 +30,7 @@ def generate_polynom_data(start, end, steps):
 
     for p in POLYNOMS:
         y = x**p
-        y_noise = x**p + np.random.rand(len(x))*0.1
+        y_noise = x**p + np.random.rand(len(x))*0.05
         y_shifted = (x + 0.5)**p
         y_sin = x**p + np.sin(20 * np.pi * x) * 0.1
         data['pure']['y'].append(y)
