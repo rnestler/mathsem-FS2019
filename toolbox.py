@@ -211,9 +211,11 @@ def plot_wavelet_analysis(data, labels, wavelet):
     fig.tight_layout()
     #display(fig)
 
-def plot_fft_result(data, labels, axis, remove_dc):
+def plot_fft_result(data, labels, axis, remove_dc=False, window=None):
     for n in range(len(data)):
         d = data[n]
+        if window:
+            d = d * window(len(d))
         l = labels[n]
         if remove_dc:
             d = d - np.mean(d)
