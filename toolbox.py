@@ -8,7 +8,9 @@ from matplotlib import pyplot as plt
 POLYNOMS = [0.5, 0, 1, 2, 3]
 POLYNOM_LABELS = ['x^{{{}}}'.format(x) for x in POLYNOMS]
 
-def generate_polynom_data(start, end, steps):
+def generate_polynom_data(start, end, steps, seed=None):
+    if seed:
+        np.random.seed(seed)
     x = np.linspace(start, end, steps)
     data = {}
     data['x'] = x
