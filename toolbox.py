@@ -19,7 +19,7 @@ def generate_polynom_data(start, end, steps, seed=None):
     data['pure']['y'] = []
 
     data['with_noise'] = {}
-    data['with_noise']['labels'] = ['$' + x + ' + r$' for x in POLYNOM_LABELS]
+    data['with_noise']['labels'] = ['$' + x + ' + r(x)$' for x in POLYNOM_LABELS]
     data['with_noise']['y'] = []
 
     data['shifted'] = {}
