@@ -9,7 +9,7 @@ POLYNOMS = [0.5, 0, 1, 2, 3]
 POLYNOM_LABELS = ['x^{{{}}}'.format(x) for x in POLYNOMS]
 
 def generate_polynom_data(start, end, steps, seed=None):
-    if seed:
+    if seed is not None:
         np.random.seed(seed)
     x = np.linspace(start, end, steps)
     data = {}
