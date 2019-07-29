@@ -249,7 +249,6 @@ def plot_differentation(data, labels, n_diff, axis, x=None, legend=True, title=T
             axis.plot(x[:-1], diff, label=l)
         if title:
             axis.set_title("Differentiation")
-        axis.grid()
     if legend:
         axis.legend()
 
