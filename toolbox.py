@@ -167,7 +167,7 @@ def plot_dwt_multi_level_single(x, d, wavelet, fig, label='', level=None, legend
     xtick = np.linspace(min(x), max(x), 9)
     plots = fig.subplots(level + 2, 1, sharex=True)
     coeffs = pywt.wavedec(d, wavelet, mode=MODE, level=level)
-    plots[0].plot(x, d, '-o', color='C0')
+    plots[0].plot(x, d, '-o', color='C0', ms=2)
     plots[0].set_xticks(xtick)
     plots[0].set_ylabel('Signal')
     for n in range(len(coeffs)):
@@ -183,7 +183,7 @@ def plot_dwt_multi_level_single(x, d, wavelet, fig, label='', level=None, legend
         else:
             ylabel= '$cA_{}$'.format(n)
             color='C2'
-        plots[n+1].step(x, y, 'o', where='mid', label=label, color=color)
+        plots[n+1].step(x, y, 'o', where='mid', label=label, color=color, ms=2)
         plots[n+1].set_ylabel(ylabel)
         if abs(min(y) - max(y)) < axis_limit:
             y_lim = plots[n+1].get_ylim()
