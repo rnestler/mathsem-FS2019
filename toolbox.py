@@ -123,7 +123,9 @@ def print_signals(data, labels):
     return fig, lines
 
 MODE='smooth'
-def plot_dwt_result(data, labels, wavelet, ca_axis, cd_axis, cd_title="Detailkoeffizienten"):
+def plot_dwt_result(data, labels, wavelet, ca_axis, cd_axis, cd_title="Detailkoeffizienten", colors=None):
+    if colors is None:
+        colors = ['C0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6']
     for n in range(len(data)):
         d = data[n]
         l = labels[n]
@@ -139,10 +141,10 @@ def plot_dwt_result(data, labels, wavelet, ca_axis, cd_axis, cd_title="Detailkoe
         #print(len(d), len(ca), len(cd))
         if ca_axis:
             ca_axis.set_title("Approximationskoeffizienten")
-            ca_axis.plot(ca, label=l)
+            ca_axis.plot(ca, label=l, color=colors[n])
         if cd_axis:
             cd_axis.set_title(cd_title)
-            cd_axis.plot(cd, label=l)
+            cd_axis.plot(cd, label=l, color=colors[n])
         
 def plot_dwt_multi_level(data, labels, wavelet, fig, level=None, legend=False, padding=2, axis_limit=0.001):
     plots = fig.subplots(level + 1, 1)
@@ -237,16 +239,18 @@ def plot_fft_analysis(data, labels, remove_dc=False):
     plot_fft_result(data, labels, ax_lst, remove_dc)
 
 
-def plot_differentation(data, labels, n_diff, axis, x=None, legend=True, title=True):
+def plot_differentation(data, labels, n_diff, axis, x=None, legend=True, title=True, colors=None):
+    if colors is None:
+        colors = ['C0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6']
     for n in range(len(data)):
         d = data[n]
         l = labels[n]
         diff = np.diff(d, n_diff)
         #print("Diff Mean:", np.mean(diff))
         if x is None:
-            axis.plot(diff, label=l)
+            axis.plot(diff, label=l, color=colors[n])
         else:
-            axis.plot(x[:-1], diff, label=l)
+            axis.plot(x[:-1], diff, label=l, color=colors[n])
         if title:
             axis.set_title("Differentiation")
     if legend:
