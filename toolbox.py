@@ -27,7 +27,7 @@ def generate_polynom_data(start, end, steps, seed=None):
     data['shifted']['y'] = []
 
     data['sin'] = {}
-    data['sin']['labels'] = ['$' + x + ' + sin(f \pi x) \cdot a$' for x in POLYNOM_LABELS]
+    data['sin']['labels'] = ['$' + x + ' + \sin(f \pi x) \cdot a$' for x in POLYNOM_LABELS]
     data['sin']['y'] = []
 
     for p in POLYNOMS:
@@ -48,7 +48,7 @@ data_shifted = []
 data_with_sin = []
 labels = ['$x^{0.5}$', '$x^0$', '$x^1$', '$x^2$', '$x^3$']
 labels_shifted = ['$(x+t)^{0.5}$', '$(x+t)^0$', '$(x+t)^1$', '$(x+t)^2$', '$(x+t)^3$']
-labels_sin = [x + ' + sin(f \pi x) \cdot a$' for x in ['$x^{0.5}', '$x^0', '$x^1', '$x^2', '$x^3']]
+labels_sin = [x + ' + \sin(f \pi x) \cdot a$' for x in ['$x^{0.5}', '$x^0', '$x^1', '$x^2', '$x^3']]
 x = np.linspace(0, 2, 128)
 for p in [0.5, 0, 1, 2, 3]:
     y = x**p
@@ -74,15 +74,15 @@ data_zero_padded_labels.append('$x$')
 
 y = np.concatenate((np.zeros(padding), np.sin(x_padded * 2 * np.pi)))
 data_zero_padded.append(y)
-data_zero_padded_labels.append('$sin(2 \pi x)$')
+data_zero_padded_labels.append('$\sin(2 \pi x)$')
 
 y = np.concatenate((np.zeros(padding), np.sin(x_padded * 10 * np.pi)))
 data_zero_padded.append(y)
-data_zero_padded_labels.append('$sin(10 \pi x)$')
+data_zero_padded_labels.append('$\sin(10 \pi x)$')
 
 y = np.concatenate((np.zeros(padding), np.sin(x_padded * 20 * np.pi)))
 data_zero_padded.append(y)
-data_zero_padded_labels.append('$sin(20 \pi x)$')
+data_zero_padded_labels.append('$\sin(20 \pi x)$')
 
 
 data_sin_with_noise = []
@@ -91,15 +91,15 @@ noise = 1
 
 y = data_zero_padded[1] + (np.random.rand(len(x)) - 0.5) * noise
 data_sin_with_noise.append(y)
-data_sin_with_noise_labels.append('$sin(x 2 \pi) + rand$')
+data_sin_with_noise_labels.append('$\sin(x 2 \pi) + rand$')
 
 y = data_zero_padded[2] + (np.random.rand(len(x)) - 0.5) * noise
 data_sin_with_noise.append(y)
-data_sin_with_noise_labels.append('$sin(x 10 \pi) + rand$')
+data_sin_with_noise_labels.append('$\sin(x 10 \pi) + rand$')
 
 y = data_zero_padded[3] + (np.random.rand(len(x)) - 0.5) * noise
 data_sin_with_noise.append(y)
-data_sin_with_noise_labels.append('$sin(x 20 \pi) + rand$')
+data_sin_with_noise_labels.append('$\sin(x 20 \pi) + rand$')
 
 data = data_pure
 #labels += ['$x + sin(20 \pi x)$']
